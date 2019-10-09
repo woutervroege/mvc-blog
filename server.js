@@ -2,15 +2,18 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser')
-const PostController = require('./controllers/PostController');
-
-console.info(require('path').resolve(__filename, '/../'));
-
 app.use(bodyParser.json())
+const PostController = require('./controllers/PostController');
 
 app.get('/posts', async (req, res) => {
   const controller = new PostController();
   const postView = await controller.getPostsList();
+  res.json(postView);
+})
+
+app.get('/posts/:id', async (req, res) => {
+  const controller = new PostController();
+  const postView = await controller.getPost(req.params.id);
   res.json(postView);
 })
 
