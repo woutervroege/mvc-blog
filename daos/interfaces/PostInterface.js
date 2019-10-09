@@ -1,26 +1,28 @@
+const MSG = 'Method not implemented!';
+
 class PostInterface {
     async getPosts() {
-        console.warn('not implemented');
+        console.warn(MSG);
         return [];
     }
     async getPostById(id) {
-        console.warn('not implemented');
+        console.warn(MSG);
         return {};
     }
     async getPostsByUserId(id) {
-        console.warn('not implemented');
+        console.warn(MSG);
         return [];
     }
     async createPost(post) {
-        console.warn('not implemented');
+        console.warn(MSG);
         return false;        
     }
     async updatePost(id) {
-        console.warn('not implemented');
+        console.warn(MSG);
         return false;        
     }
     async deletePost(id) {
-        console.warn('not implemented');
+        console.warn(MSG);
         return false;        
     }
 
