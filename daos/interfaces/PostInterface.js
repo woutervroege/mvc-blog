@@ -1,16 +1,29 @@
 class PostInterface {
-    getPosts() {
+    async getPosts() {
         console.warn('not implemented');
         return [];
     }
-    getPostById(id) {
+    async getPostById(id) {
         console.warn('not implemented');
         return {};
     }
-    getPostsByUserId(id) {
+    async getPostsByUserId(id) {
         console.warn('not implemented');
         return [];
     }
+    async createPost(post) {
+        console.warn('not implemented');
+        return false;        
+    }
+    async updatePost(id) {
+        console.warn('not implemented');
+        return false;        
+    }
+    async deletePost(id) {
+        console.warn('not implemented');
+        return false;        
+    }
+
 }
 
 module.exports = PostInterface;

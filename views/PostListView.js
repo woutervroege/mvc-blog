@@ -1,7 +1,9 @@
 const PostView = require('./PostView');
 
-function main(postModels) {
-    return postModels.map((postModel => PostView(postModel)));
+class PostsListView {
+    constructor(postModels) {
+        return postModels.map((postModel => new PostView(postModel)));
+    }
 }
 
-module.exports = main;
+module.exports = PostsListView;

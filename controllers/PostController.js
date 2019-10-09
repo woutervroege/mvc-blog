@@ -5,26 +5,43 @@ const PostView = require('../views/PostView');
 const PostListView = require('../views/PostListView');
 
 class PostController {
-    getUserPostsList(uid) {
+    async getUserPostsList(uid) {
         const dao = new PostDAO();
-        const dbData = dao.getPostsByUserId(uid);
+        const dbData = await dao.getPostsByUserId(uid);
         const postModels = dbData.map(item => new PostModel(item));
         const postView = new PostListView(postModels);
         return postView;
     }
-    getPostsList() {
+    async getPostsList() {
         const dao = new PostDAO();
-        const dbData = dao.getPosts();
+        const dbData = await dao.getPosts();
         const postModels = dbData.map(item => new PostModel(item));
         const postView = new PostListView(postModels);
         return postView;
     }
-    getPost(id) {
+    async getPost(id) {
         const dao = new PostDAO();
-        const dbData = dao.getPostById(id);
+        const dbData = await dao.getPostById(id);
         const postModel = new PostModel(dbData);
         const postView = new PostView(postModel);
         return postView;
+    }
+    async createPost(data) {
+        const postModel = new PostModel(data);
+        const dao = new PostDAO();
+        const result = await dao.createPost(postModel);
+        return result;
+    }
+    async updatePost(data) {
+        const postModel = new PostModel(data);
+        const dao = new PostDAO();
+        const result = await dao.updatePost(postModel);
+        return result;
+    }
+    async deletePost(id) {
+        const dao = new PostDAO();
+        const result = await dao.deletePostById(id);
+        return result;
     }
 }
 

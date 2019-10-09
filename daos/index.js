@@ -1,5 +1,5 @@
-const DBNAME = 'redis';
-const PostDAO = require('./' + DBNAME + '/PostDAO');
+const CONNECTOR = 'Filesystem';
+const PostDAO = require('./' + CONNECTOR + '/PostDAO');
 
 module.exports = {
     Post: PostDAO
