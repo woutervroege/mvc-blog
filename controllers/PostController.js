@@ -38,6 +38,13 @@ class PostController {
         const result = await dao.updatePost(postModel);
         return result;
     }
+    async patchPost(data) {
+        const dao = new PostDAO();
+        const dbData = await dao.getPostById(data.id);
+        const postModel = new PostModel({...dbData, ...data});
+        const result = await dao.updatePost(postModel);
+        return result;
+    }
     async deletePost(id) {
         const dao = new PostDAO();
         const result = await dao.deletePostById(id);

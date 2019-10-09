@@ -31,6 +31,13 @@ app.put('/posts/:id', async (req, res) => {
   res.status(status).json(post.toJSON());
 })
 
+app.patch('/posts/:id', async (req, res) => {
+  const controller = new PostController();
+  const post = await controller.patchPost({...req.body, id: req.params.id});
+  const status = post.valid ? 200 : 400;
+  res.status(status).json(post.toJSON());
+})
+
 app.delete('/posts/:id', async (req, res) => {
   const controller = new PostController();
   const success = await controller.deletePost(req.params.id);
