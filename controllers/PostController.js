@@ -1,6 +1,5 @@
 const PostModel = require('../models/PostModel');
-const DAO = require('../daos/index');
-const PostDAO = DAO.Post;
+const PostDAO = require('../daos/PostDAO');
 const PostView = require('../views/PostView');
 const PostListView = require('../views/PostListView');
 
