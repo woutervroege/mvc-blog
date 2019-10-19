@@ -21,6 +21,10 @@ class PostInterface {
         console.warn(MSG);
         return false;        
     }
+    async patchPost(id) {
+        console.warn(MSG);
+        return false;        
+    }
     async deletePost(id) {
         console.warn(MSG);
         return false;        
