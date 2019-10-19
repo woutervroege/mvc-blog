@@ -51,15 +51,6 @@ class PostModel {
         return !!this.uid && !!this.title && !!this.contents && !!this.timePublished;
     }
 
-    toJSON() {
-        return {
-            id: this.id,
-            uid: this.uid,
-            title: this.title,
-            contents: this.contents,
-            timePublished: this.timePublished,
-        }
-    }
 }
 
 module.exports = PostModel;
