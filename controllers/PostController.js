@@ -6,23 +6,20 @@ const PostListView = require('../views/PostListView');
 class PostController {
     async getUserPostsList(uid) {
         const dao = new PostDAO();
-        const dbData = await dao.getPostsByUserId(uid);
-        const postModels = dbData.map(item => new PostModel(item));
-        const postView = new PostListView(postModels);
+        const posts = await dao.getPostsByUserId(uid);
+        const postView = new PostListView(posts);
         return postView;
     }
     async getPostsList() {
         const dao = new PostDAO();
-        const dbData = await dao.getPosts();
-        const postModels = dbData.map(item => new PostModel(item));
-        const postView = new PostListView(postModels);
+        const posts = await dao.getPosts();
+        const postView = new PostListView(posts);
         return postView;
     }
     async getPost(id) {
         const dao = new PostDAO();
-        const dbData = await dao.getPostById(id);
-        const postModel = new PostModel(dbData);
-        const postView = new PostView(postModel);
+        const post = await dao.getPostById(id);
+        const postView = new PostView(post);
         return postView;
     }
     async createPost(data) {

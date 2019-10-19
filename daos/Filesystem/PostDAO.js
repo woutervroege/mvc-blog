@@ -1,55 +1,63 @@
-const PostInterface = require('../interfaces/PostInterface');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
+
+const PostInterface = require('../interfaces/PostInterface');
+const PostModel = require('../../models/PostModel');
 const POSTS_FILE = path.resolve(__filename, '../Posts.json');
 
 class PostDAO extends PostInterface {
     
     async getPosts() {
-        const POSTS = await this._readDB();
-        return POSTS;
+        const dbData = await this._readDB();
+        const Posts = dbData.map(item => new PostModel(item));
+        return Posts;
     }
     
     async getPostById(id) {
-        const POSTS = await this._readDB();
-        return POSTS.find(item => item.id == id);
+        const dbData = await this._readDB();
+        const itemData = dbData.find(item => item.id == id);
+        if(!itemData) throw 'item not found';
+        const Post = new PostModel(itemData);
+        return Post;
     }
     
     async getPostsByUserId(id) {
-        const POSTS = await this._readDB();
-        return POSTS.filter(item => item.uid == id);
+        const dbData = await this._readDB();
+        const filteredItems = dbData.filter(item => item.uid == id);
+        const Posts = filteredItems.map(item => new PostModel(item));
+        return Posts;
     }
     
-    async createPost(postModel) {
-        const POSTS = await this._readDB();
-        postModel.id = Math.random();
-        if(!postModel.valid) return postModel;
+    async createPost(Post) {
+        const dbData = await this._readDB();
+        Post.id = Math.random();
+        if(!Post.valid) return Post;
         
-        const data = postModel.toJSON();
-        POSTS.push(data);
-        await this._writeDB(POSTS);
-        return postModel;
+        const data = this._parsePostToDataObject(Post);
+        dbData.push(data);
+        await this._writeDB(dbData);
+        return Post;
     }
     
-    async updatePost(postModel) {
-        const POSTS = await this._readDB();
-        if(!postModel.valid) return postModel;
+    async updatePost(Post) {
+        const dbData = await this._readDB();
+        if(!Post.valid) return Post;
         
-        const data = postModel.toJSON();
-        const index = POSTS.findIndex(item => item.id == postModel.id);
-        POSTS[index] = data;
-        await this._writeDB(POSTS);
-        return postModel;
+        const data = this._parsePostToDataObject(post);
+        const index = dbData.findIndex(item => item.id == Post.id);
+        dbData[index] = data;
+        await this._writeDB(dbData);
+        return Post;
     }
     
     async deletePostById(id) {
-        const POSTS = await this._readDB();
-        const FilteredPosts = POSTS.filter(item => item.id != id);
+        const dbData = await this._readDB();
+        const filteredData = dbData.filter(item => item.id != id);
         try {
-            await this._writeDB(FilteredPosts);
+            await this._writeDB(filteredData);
             return true;
         } catch(e) {
             return false;
@@ -64,6 +72,16 @@ class PostDAO extends PostInterface {
     
     async _writeDB(data) {
         return await writeFile(POSTS_FILE, JSON.stringify(data, null, 2));
+    }
+
+    _parsePostToDataObject(post) {
+        return {
+            id: post.id,
+            uid: post.uid,
+            title: post.title,
+            contents: post.contents,
+            timePublished: post.timePublished,
+        }
     }
 }
 
