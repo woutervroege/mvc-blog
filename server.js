@@ -23,9 +23,13 @@ Get Post By Id
 $ curl http://localhost:3000/posts/3
 */
 app.get('/posts/:id', async (req, res) => {
-  const controller = new PostController();
-  const postView = await controller.getPost(req.params.id);
-  res.json(postView);
+  try {
+    const controller = new PostController();
+    const postView = await controller.getPost(req.params.id);
+    res.json(postView);
+  } catch(error) {
+    res.status(404).json(error);
+  }
 })
 
 /*
