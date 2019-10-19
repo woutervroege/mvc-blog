@@ -34,9 +34,9 @@ $ curl -X "POST" -H "Content-Type: application/json" -d '{"title": "Another Blog
 */
 app.post('/posts', async (req, res) => {
   const controller = new PostController();
-  const post = await controller.createPost(req.body);
-  const status = post.valid ? 200 : 400;
-  res.status(status).json(post.toJSON());
+  const Post = await controller.createPost(req.body);
+  const status = Post.valid ? 200 : 400;
+  res.status(status).send();
 })
 
 /*
@@ -45,9 +45,9 @@ $ curl -X "PUT" -H "Content-Type: application/json" -d '{"title": "Another Blog 
 */
 app.put('/posts/:id', async (req, res) => {
   const controller = new PostController();
-  const post = await controller.updatePost({...req.body, id: req.params.id});
-  const status = post.valid ? 200 : 400;
-  res.status(status).json(post.toJSON());
+  const Post = await controller.updatePost({...req.body, id: req.params.id});
+  const status = Post.valid ? 200 : 400;
+  res.status(status).send();
 })
 
 /*
@@ -56,9 +56,9 @@ $ curl -X "PATCH" -H "Content-Type: application/json" -d '{"title": "Just update
 */
 app.patch('/posts/:id', async (req, res) => {
   const controller = new PostController();
-  const post = await controller.patchPost({...req.body, id: req.params.id});
-  const status = post.valid ? 200 : 400;
-  res.status(status).json(post.toJSON());
+  const Post = await controller.patchPost({...req.body, id: req.params.id});
+  const status = Post.valid ? 200 : 400;
+  res.status(status).send();
 })
 
 /*
